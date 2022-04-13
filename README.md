@@ -1,5 +1,6 @@
 # Infocal
 Infocal, a watchface for Garmin devices
+Sindar-Sudo: I created this fork to fix compilation issues and use it direclty for my personal Fenix 6s watch.
 
 [Link to Garmin Connect IQ store](https://apps.garmin.com/en-US/apps/c97c4e34-55e4-4601-b5c2-45763bc481a2#0)
 
