@@ -18,6 +18,7 @@ enum /* FIELD_TYPES */ {
 	FIELD_TYPE_MOVE,
 	FIELD_TYPE_STEP,
 	FIELD_TYPE_ACTIVE,
+	FIELD_TYPE_BODYBATTERY,
 	
 	FIELD_TYPE_DATE,
 	FIELD_TYPE_TIME,
@@ -105,6 +106,8 @@ function buildFieldObject(type) {
 		return new CTextField(FIELD_TYPE_CTEXT_INDICATOR);
 	} else if (type==FIELD_TYPE_WIND) {
 		return new WindField(FIELD_TYPE_WIND);
+	} else if (type==FIELD_TYPE_BODYBATTERY) {
+		return new BodyBatteryField(FIELD_TYPE_BODYBATTERY);
 	}
 	
 	return new EmptyDataField(FIELD_TYPE_EMPTY);
@@ -789,7 +792,7 @@ class GroupNotiField extends BaseDataField {
 	
 	function cur_label(value) {
 		var settings = Sys.getDeviceSettings();
-		var value = settings.alarmCount;
+		value = settings.alarmCount;
 		var alarm_str = Lang.format("A$1$",[value.format("%d")]);
 		value = settings.notificationCount;
 		var noti_str = Lang.format("N$1$",[value.format("%d")]);
@@ -866,7 +869,7 @@ class SunField extends BaseDataField {
 	
 	function cur_label(value) {
 		if (gLocationLat != null) {
-			var value = "";
+			value = "";
 			var nextSunEvent = 0;
 			var isSunriseNext = false;
 			var now = Date.info(Time.now(), Time.FORMAT_SHORT);
@@ -1097,7 +1100,7 @@ class TemparatureField extends BaseDataField {
 	
 	function cur_label(value) {
 		var need_minimal = App.getApp().getProperty("minimal_data");
-		var value = 0;
+		value = 0;
 		var settings = Sys.getDeviceSettings();
 		if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getTemperatureHistory)) {
 			var sample = SensorHistory.getTemperatureHistory(null).next();
@@ -1145,7 +1148,7 @@ class AltitudeField extends BaseDataField {
 	
 	function cur_label(value) {
 		var need_minimal = App.getApp().getProperty("minimal_data");
-		var value = 0;
+		value = 0;
 		// #67 Try to retrieve altitude from current activity, before falling back on elevation history.
 		// Note that Activity::Info.altitude is supported by CIQ 1.x, but elevation history only on select CIQ 2.x
 		// devices.
@@ -1207,7 +1210,7 @@ class AlarmField extends BaseDataField {
 	
 	function cur_label(value) {
 		var settings = Sys.getDeviceSettings();
-		var value = settings.alarmCount;
+		value = settings.alarmCount;
 		return Lang.format("ALAR $1$",[value.format("%d")]);
 	}
 }
@@ -1228,7 +1231,7 @@ class NotifyField extends BaseDataField {
 	
 	function cur_label(value) {
 		var settings = Sys.getDeviceSettings();
-		var value = settings.notificationCount;
+		value = settings.notificationCount;
 		return Lang.format("NOTIF $1$",[value.format("%d")]);
 	}
 }
@@ -1351,7 +1354,7 @@ class DistanceField extends BaseDataField {
 	}
 	
 	function max_label(value) {
-		var value = value/1000.0;
+		value = value/1000.0;
 		value = value/100.0; // convert cm to km
     	var valKp = App.getApp().toKValue(value);
     	return Lang.format("$1$K",[valKp]);
@@ -1690,3 +1693,27 @@ function _retrieveHeartrate() {
 // end HR stage //
 //////////////////
 
+////////////////////////
+// Body Battery stage //
+////////////////////////
+
+class BodyBatteryField extends BaseDataField {
+
+	function initialize(id) {
+		BaseDataField.initialize(id);
+	}
+
+	function min_val() {
+    	return 0.0;
+	}
+	
+	function max_val() {
+	    return 100.0;
+	}
+	function cur_val() {
+		return SensorHistory.getBodyBatteryHistory();
+	}
+	function bar_data() {
+		return true;
+	}
+}
