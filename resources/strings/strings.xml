@@ -62,6 +62,7 @@
     <string id="date">Date</string>
     <string id="time">Digital time</string>
     <string id="time_secondary">Digital time (Secondary timezone)</string>
+    <string id="bodybattery">Body Battery</string>
     
     <string id="notification">Notification count</string>
     <string id="alarm">Alarm count</string>
