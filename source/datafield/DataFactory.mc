@@ -18,6 +18,7 @@ enum /* FIELD_TYPES */ {
 	FIELD_TYPE_MOVE,
 	FIELD_TYPE_STEP,
 	FIELD_TYPE_ACTIVE,
+	FIELD_TYPE_BODYBATTERY,
 	
 	FIELD_TYPE_DATE,
 	FIELD_TYPE_TIME,
@@ -105,6 +106,8 @@ function buildFieldObject(type) {
 		return new CTextField(FIELD_TYPE_CTEXT_INDICATOR);
 	} else if (type==FIELD_TYPE_WIND) {
 		return new WindField(FIELD_TYPE_WIND);
+	} else if (type==FIELD_TYPE_BODYBATTERY) {
+		return new BodyBatteryField(FIELD_TYPE_BODYBATTERY);
 	}
 	
 	return new EmptyDataField(FIELD_TYPE_EMPTY);
@@ -1690,3 +1693,27 @@ function _retrieveHeartrate() {
 // end HR stage //
 //////////////////
 
+////////////////////////
+// Body Battery stage //
+////////////////////////
+
+class BodyBatteryField extends BaseDataField {
+
+	function initialize(id) {
+		BaseDataField.initialize(id);
+	}
+
+	function min_val() {
+    	return 0.0;
+	}
+	
+	function max_val() {
+	    return 100.0;
+	}
+	function cur_val() {
+		return SensorHistory.getBodyBatteryHistory();
+	}
+	function bar_data() {
+		return true;
+	}
+}
