@@ -1711,7 +1711,30 @@ class BodyBatteryField extends BaseDataField {
 	    return 100.0;
 	}
 	function cur_val() {
-		return SensorHistory.getBodyBatteryHistory();
+		var bbIterator = _getIterator();
+  		var sample = bbIterator.next(); 
+		return sample;
+	}
+
+	// Create a method to get the SensorHistoryIterator object
+	function _getIterator() {
+	    // Check device for SensorHistory compatibility
+	    if ((Toybox has :SensorHistory) && (Toybox.SensorHistory has :getBodyBatteryHistory)) {
+	        return Toybox.SensorHistory.getBodyBatteryHistory({});
+	    }
+	    return null;
+	}
+	
+
+	
+	function min_label(value) {
+		return "b";
+	}
+		function max_label(value) {
+		return "P";
+	}
+	function cur_label(value) {
+		return "0";
 	}
 	function bar_data() {
 		return true;

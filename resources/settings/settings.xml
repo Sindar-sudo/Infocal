@@ -207,6 +207,7 @@
             <listEntry value="25">@Strings.weather</listEntry>
             <listEntry value="26">@Strings.ampm</listEntry>
             <listEntry value="28">@Strings.wind</listEntry>
+            <listEntry value="29">@Strings.bodybattery</listEntry>
         </settingConfig>
     </setting>
     <setting propertyKey="@Properties.comp8h" title="@Strings.comp8h">

@@ -22,7 +22,7 @@
     <property id="comp12h" type="number">1</property>
     <property id="comp2h" type="number">4</property>
     <property id="comp4h" type="number">5</property>
-    <property id="comp6h" type="number">2</property>
+    <property id="comp6h" type="number">29</property>
     <property id="comp8h" type="number">6</property>
     <!-- <property id="comp10h" type="number">6</property> -->
     <property id="comp10h" type="number">10</property>
